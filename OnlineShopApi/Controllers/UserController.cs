@@ -49,7 +49,7 @@ namespace OnlineShopApi.Controllers
         }
 
 
-        [HttpPut("{UserId}")]
+        [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUser(string userId, UpdateUserQuery updateQuery)
         {
             updateQuery.UserId = userId;
@@ -57,25 +57,25 @@ namespace OnlineShopApi.Controllers
 
             if (updated)
             {
-                return Ok("Product updated successfully.");
+                return Ok("USer updated successfully.");
             }
 
-            return NotFound("Product not found or no updates were made.");
+            return NotFound("USer not found or no updates were made.");
         }
 
 
 
-        [HttpDelete("{UserId}")]
+        [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             bool deleted = await _mediator.Send(new DeleteUserQuery { UserId = userId });
 
             if (deleted)
             {
-                return Ok("Product deleted successfully.");
+                return Ok("User deleted successfully.");
             }
 
-            return NotFound("Product not found or no deletion was made.");
+            return NotFound("User not found or no deletion was made.");
         }
 
 
