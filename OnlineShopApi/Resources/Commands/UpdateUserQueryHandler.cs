@@ -22,7 +22,7 @@ namespace OnlineShopApi.Resources.Commands
             var updatedUser = request.UpdatedUser;
 
             var result = await _userCollection.ReplaceOneAsync(
-                 c => c.Id.ToString() == userId,
+                 c => c.Id == userId,
                  updatedUser,
                  new ReplaceOptions(),
                  cancellationToken

@@ -27,7 +27,7 @@ namespace OnlineShopApi.Resources.Commands
 
             await _userCollection.InsertOneAsync(user);
 
-            return user.Id.ToString(); ;
+            return user.Id;
         }
 
     }

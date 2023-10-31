@@ -17,13 +17,11 @@ namespace OnlineShopApi.Resources.Commands
 
         public async Task<bool> Handle(DeleteUserQuery request, CancellationToken cancellationToken)
         {
-            if (int.TryParse(request.UserId, out int userId))
-            {
-                var result = await _userCollection.DeleteOneAsync(c => c.Id == userId, cancellationToken);
-                return result.IsAcknowledged && result.DeletedCount > 0;
-            }
+            var userId = request.UserId;
 
-            return false;
+            var result = await _userCollection.DeleteOneAsync(c => c.Id ==userId, cancellationToken);
+
+            return result.IsAcknowledged && result.DeletedCount > 0;
         }
 
     }

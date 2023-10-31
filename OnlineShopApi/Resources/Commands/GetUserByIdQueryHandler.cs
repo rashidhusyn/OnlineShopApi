@@ -17,7 +17,7 @@ namespace OnlineShopApi.Resources.Commands
 
         public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _userCollection.Find(p => p.Id.ToString() == request.UserId).FirstOrDefaultAsync(cancellationToken);
+            return await _userCollection.Find(p => p.Id == request.UserId).FirstOrDefaultAsync(cancellationToken);
         }
 
     }
