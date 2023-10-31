@@ -21,14 +21,38 @@ namespace OnlineShopApi.Resources.Commands
             var userId = request.UserId;
             var updatedUser = request.UpdatedUser;
 
-            var result = await _userCollection.ReplaceOneAsync(
-                 c => c.Id == userId,
-                 updatedUser,
-                 new ReplaceOptions(),
-                 cancellationToken
-             );
+            var existingUser = await _userCollection
+               .Find(p => p.Id == userId)
+               .FirstOrDefaultAsync(cancellationToken);
+            if (existingUser == null)
+            {
+                return false;
+            }
+            if (updatedUser.Name != null)
+            {
+                existingUser.Name = updatedUser.Name;
+            }
+            if (updatedUser.UserName != null)
+            {
+                existingUser.UserName = updatedUser.UserName;
+            }
+            if (updatedUser.Email != null)
+            {
+                existingUser.Email = updatedUser.Email;
+            }
+            if (updatedUser.Password != null)
+            {
+                existingUser.Password = updatedUser.Password;
+            }
 
-            return result.IsAcknowledged && result.ModifiedCount > 0;
+            var updateResult = await _userCollection.ReplaceOneAsync(
+                p => p.Id == userId,
+                existingUser,
+                cancellationToken: cancellationToken
+            );
+
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+
         }
 
     }
