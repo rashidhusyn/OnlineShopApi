@@ -3,25 +3,33 @@ using MongoDB.Bson;
 
 namespace OnlineShopApi.Models
 {
-    public class Cart
+    public class Order
     {
-        public Cart()
-        {
-            Id = ObjectId.GenerateNewId().ToString();
-        }
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public  string Id { get; set; }
+        public string Id { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-
         public string UserId { get; set; }
-        public List<CartItem> Items { get; set; } = new List<CartItem>();
+
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public OrderStatus Status { get; set; }
+        public DateTime OrderDate { get; set; }
     }
-    public class CartItem
+    public class OrderItem
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string ProductId { get; set; }
         public int Quantity { get; set; }
+    }
+
+    public enum OrderStatus
+    {
+        Unknown,
+        Placed,
+        Shipped,
+        Pending,
+        Delivered,
+        Canceled
     }
 }
